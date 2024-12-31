@@ -1,5 +1,7 @@
 import subprocess, os, sys
 
+from libfuturize.fixes.fix_division_safe import const_re
+
 # Build ffmpeg and ffprobe from source or download at
 # https://www.gyan.dev/ffmpeg/builds/
 # or download at https://mega.nz/file/TAlnSJhC#u58yn-9baEduAXW2dDXLz8YAc_72DC8E0u9J1Wmr6WI
@@ -9,10 +11,9 @@ import subprocess, os, sys
 contentdir = ''
 outdir = ''
 createoutdir = True
+imagefname = 'image.png'
 ffmpegfname = 'ffmpeg.exe'
 ffprobefname = 'ffprobe.exe'
-imagepath = contentdir + os.path.sep + 'image.png'
-outvidfname = outdir + os.path.sep + 'out.mp4'
 
 # A python class definition for printing formatted text on terminal.
 # Initialize TextFormatter object like this:
@@ -151,7 +152,10 @@ if __name__ == "__main__":
     colorprint = TextFormatter()
     colorprint.cfg('r', 'k', 'b')
     contentfolder = ''
-    if len(contentdir) == 0:
+    outfolder = ''
+    inagepath = ''
+    outvidfname = ''
+    if len(contentdir) == 0 or contentdir is None:
         if len(sys.argv) > 1:
             contentfolder = sys.argv[1]
     else:
@@ -165,20 +169,34 @@ if __name__ == "__main__":
             outfolder = sys.argv[2]
     else:
         outfolder = outdir
+    if len(imagefname) == 0 or imagefname is None:
+        if len(sys.argv) > 3:
+            imagefname = sys.argv[3]
+        else:
+            colorprint.out('IMAGE FILENAME NOT SET')
+            systemExitCode = 2
+            sys.exit(systemExitCode)
+    else:
+        if not os.path.exists(contentfolder + os.path.sep + imagefname):
+            colorprint.out('IMAGE FILENAME DIES NOT EXIST')
+            systemExitCode = 3
+            sys.exit(systemExitCode)
+    imagepath = contentfolder + os.path.sep + imagefname
     if not os.path.exists(outfolder):
         if createoutdir is None:
-            if len(sys.argv) > 3:
-                createoutdir = sys.argv[3]
+            if len(sys.argv) > 4:
+                createoutdir = sys.argv[4]
+                inagepath = contentfolder + os.path.sep + imagefname
             else:
                 colorprint.out('OUTPUT FOLDER CREATION PERMISSION NOT SET')
-                systemExitCode = 2
+                systemExitCode = 4
                 sys.exit(systemExitCode)
         else :
-            if createoutdir:
+            if createoutdir and not os.path.exists(createoutdir):
                 os.makedirs(outfolder)
             else:
                 colorprint.out('OUTPUT FOLDER CREATION PERMISSION NOT GRANTED')
-                systemExitCode = 2
+                systemExitCode = 5
                 sys.exit(systemExitCode)
     scriptdir = get_script_path()
     ffmpegfname = scriptdir + os.path.sep + ffmpegfname
@@ -191,14 +209,18 @@ if __name__ == "__main__":
         colorprint.out('FFPROBE EXE NOT FOUND')
         systemExitCode = 5
         sys.exit(systemExitCode)
-    filelist = listFilesInFolderByExt(contentdir, '.mp3', False)
+    filelist = listFilesInFolderByExt(contentfolder, '.mp3', False)
     if filelist is None or len(filelist) == 0:
         colorprint.out('NO FILES FOR CONVERSION FOUND')
         systemExitCode = 6
         sys.exit(systemExitCode)
     convcount = 0
     for file in filelist:
-        mp3duration = getmediaduration(contentdir + os.path.sep + file)
+        mp3duration = getmediaduration(contentfolder + os.path.sep + file)
+        if mp3duration is None:
+            colorprint.out('COULD BOT HET MP3 DURATION')
+            systemExitCode = 7
+            sys.exit(systemExitCode)
         outvidfname =  outfolder + os.path.sep + file[:-4] + '.mp4'
         if os.path.exists(outvidfname):
             os.remove(outvidfname)
@@ -208,7 +230,7 @@ if __name__ == "__main__":
             arglist.append(el.strip())
         arglist.append(imagepath)
         arglist.append('-i')
-        arglist.append(contentdir + os.path.sep + file)
+        arglist.append(contentfolder + os.path.sep + file)
         cmdlist = ('-c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest -t ' + mp3duration).split()
         for el in cmdlist :
             arglist.append(el.strip())
