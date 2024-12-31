@@ -120,12 +120,14 @@ def getmediaduration(mp3filename: str):
     if not os.path.exists(mp3filename):
         colorprint.out('PATH TO MP3 FILE DOES NOT EXIST')
         return None
-    arglist = [ ffprobefname, '-show_entries', 'format=duration','-i',mp3filename ]
-    popen  = subprocess.Popen(arglist, stdout = subprocess.PIPE)
+    subarglist = [ ffprobefname, '-show_entries', 'format=duration','-i',mp3filename ]
+    popen  = subprocess.Popen(subarglist, stdout = subprocess.PIPE)
     popen.wait()
     output = str(popen.stdout.read())
-    return output.split('\\r\\n')[1][9:]
-
+    if len(output) > 0 and '\\r\\n' in output:
+        return output.split('\\r\\n')[1][9:]
+    else:
+        return None
 
 def listFilesInFolderByExt(folderpath: str, fileext: str = '.mp3',
                            fullfilenames: bool = True):
@@ -217,8 +219,8 @@ if __name__ == "__main__":
     convcount = 0
     for file in filelist:
         mp3duration = getmediaduration(contentfolder + os.path.sep + file)
-        if mp3duration is None:
-            colorprint.out('COULD BOT HET MP3 DURATION')
+        if mp3duration is None or len(mp3duration) == 0:
+            colorprint.out('COULD NOT GET SOUND DURATION')
             systemExitCode = 7
             sys.exit(systemExitCode)
         outvidfname =  outfolder + os.path.sep + file[:-4] + '.mp4'
