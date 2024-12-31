@@ -15,9 +15,13 @@ Can be called with arguments:
 Script return codes:
 | Code | Description |
 | --- | --- |
-| 9 | Successful execution |
+| 0 | Successful execution |
 | 1 | Content folder not found |
 | 2 | Image filename not found |
 | 3 | Image filename does not exist |
-| 4 | Ourput folder creation permisssion not set |
-| 5 | Ourput folder creation permisssion not granted |
+| 4 | Output folder creation permisssion not set |
+| 5 | Output folder creation permisssion not granted |
+| 6 | ffmpeg exee bot found |
+| 7 | ffmpeg exee bot found |
+| 8 | ffprobe exee bot found |
+| 9 | Could not get sound duration |
