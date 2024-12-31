@@ -17,5 +17,5 @@ Script return codes:
 | 1 | Content folder not found |
 | 2 | Image filename not found |
 | 3 | Image filename does not exist |
-| 4 | Ourput fikder creation permisssion not set |
-| 5 | Ourput fikder creation permisssion not granted |
+| 4 | Ourput folder creation permisssion not set |
+| 5 | Ourput foler creation permisssion not granted |
