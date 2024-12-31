@@ -18,4 +18,4 @@ Script return codes:
 | 2 | Image filename not found |
 | 3 | Image filename does not exist |
 | 4 | Ourput folder creation permisssion not set |
-| 5 | Ourput foler creation permisssion not granted |
+| 5 | Ourput folder creation permisssion not granted |
