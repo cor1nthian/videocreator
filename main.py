@@ -1,7 +1,5 @@
 import subprocess, os, sys
 
-from libfuturize.fixes.fix_division_safe import const_re
-
 # Build ffmpeg and ffprobe from source or download at
 # https://www.gyan.dev/ffmpeg/builds/
 # or download at https://mega.nz/file/TAlnSJhC#u58yn-9baEduAXW2dDXLz8YAc_72DC8E0u9J1Wmr6WI
@@ -205,23 +203,23 @@ if __name__ == "__main__":
     ffprobefname = scriptdir + os.path.sep + ffprobefname
     if not os.path.exists(ffmpegfname):
         colorprint.out('FFMPEG EXE NOT FOUND')
-        systemExitCode = 4
+        systemExitCode = 6
         sys.exit(systemExitCode)
     if not os.path.exists(ffprobefname):
         colorprint.out('FFPROBE EXE NOT FOUND')
-        systemExitCode = 5
+        systemExitCode = 7
         sys.exit(systemExitCode)
     filelist = listFilesInFolderByExt(contentfolder, '.mp3', False)
     if filelist is None or len(filelist) == 0:
         colorprint.out('NO FILES FOR CONVERSION FOUND')
-        systemExitCode = 6
+        systemExitCode = 8
         sys.exit(systemExitCode)
     convcount = 0
     for file in filelist:
         mp3duration = getmediaduration(contentfolder + os.path.sep + file)
         if mp3duration is None or len(mp3duration) == 0:
             colorprint.out('COULD NOT GET SOUND DURATION')
-            systemExitCode = 7
+            systemExitCode = 9
             sys.exit(systemExitCode)
         outvidfname =  outfolder + os.path.sep + file[:-4] + '.mp4'
         if os.path.exists(outvidfname):
