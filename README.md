@@ -10,7 +10,7 @@ Can be called with arguments:
 | --- | --- | --- |
 | 1 | String | Folder containing MP3 files and image
 | 2 | String | Folder containing ourput files |
-| 3 | Boolean | If true, scripy creates output folder
+| 3 | Boolean | If true, script creates output folder
 
 Script return codes:
 | Code | Description |
