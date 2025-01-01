@@ -8,8 +8,8 @@ Tested with Windows 10
 Can be called with arguments:
 | Ppsition | Suggested type | Description |
 | --- | --- | --- |
-| 1 | String | Folder containing MP3 files and image
-| 2 | String | Folder containing ourput files |
+| 1 | String | Path to folder containing MP3 files and image
+| 2 | String | Path to folder containing ourput files |
 | 3 | Boolean | If true, script creates output folder
 
 Script return codes:
