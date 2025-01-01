@@ -1,5 +1,5 @@
 # videocreator
-Script creates MP4 files from MP3 files and an image
+Script creates MP4 files from MP3 files and an image (PNG preferred)
 
 Script uses fffmpeg / ffprobe exe tools, read more on this in script comments
 
