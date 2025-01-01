@@ -6,6 +6,8 @@ import subprocess, os, sys
 # only 'bin' folder content needed
 # Windows build only
 
+# All tools are suggested to be placed to script folder
+
 contentdir = ''
 outdir = ''
 createoutdir = True
