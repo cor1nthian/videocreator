@@ -12,6 +12,8 @@ Can be called with arguments:
 | 2 | String | Path to folder containing ourput files |
 | 3 | Boolean | If true, script creates output folder
 
+:exclamation: Variables set in the script have priority over script arguments
+
 Script return codes:
 | Code | Description |
 | --- | --- |
