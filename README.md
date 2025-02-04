@@ -23,7 +23,7 @@ Script return codes:
 | 3 | Image filename does not exist |
 | 4 | Output folder creation permisssion not set |
 | 5 | Output folder creation permisssion not granted |
-| 6 | ffmpeg exe not found |
-| 7 | ffprobe exe not found |
+| 6 | ffmpeg binary not found |
+| 7 | ffprobe binary not found |
 | 8 | No files for conversion found |
 | 9 | Could not get sound duration |
